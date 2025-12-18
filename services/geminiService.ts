@@ -1,11 +1,10 @@
-
 import { GoogleGenAI } from "@google/genai";
 
 export async function generateShoeConcept(prompt: string): Promise<string | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+    // Initializing precisely as per SDK guidelines
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // Using gemini-2.5-flash-image for image generation tasks
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
@@ -22,9 +21,11 @@ export async function generateShoeConcept(prompt: string): Promise<string | null
       }
     });
 
-    for (const part of response.candidates?.[0]?.content?.parts || []) {
-      if (part.inlineData) {
-        return `data:image/png;base64,${part.inlineData.data}`;
+    if (response.candidates && response.candidates[0].content.parts) {
+      for (const part of response.candidates[0].content.parts) {
+        if (part.inlineData) {
+          return `data:image/png;base64,${part.inlineData.data}`;
+        }
       }
     }
     
