@@ -1,7 +1,7 @@
-
 /**
  * Simulated Shoe Concept Generator
- * Replaces live Gemini API for keyless deployment on GitHub Pages
+ * Replaces live Gemini API for keyless deployment on GitHub Pages.
+ * This ensures the site remains fully functional and visual without needing an API key.
  */
 
 const MOCK_CONCEPTS = [
@@ -14,11 +14,13 @@ const MOCK_CONCEPTS = [
 ];
 
 export async function generateShoeConcept(prompt: string): Promise<string | null> {
-  // Simulate network latency and AI processing time
-  await new Promise(resolve => setTimeout(resolve, 2500));
+  console.log("Generating concept for:", prompt);
+  
+  // Simulate network latency and "AI" processing time
+  await new Promise(resolve => setTimeout(resolve, 2000));
   
   try {
-    // Return a random high-quality concept image
+    // Return a random high-quality concept image from our curated set
     const randomIndex = Math.floor(Math.random() * MOCK_CONCEPTS.length);
     return MOCK_CONCEPTS[randomIndex];
   } catch (error) {
