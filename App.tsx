@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
@@ -8,11 +8,13 @@ import Cart from './components/Cart';
 import { PRODUCTS } from './constants';
 import { Product, CartItem, ViewState } from './types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AlertTriangle, X } from 'lucide-react';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('shop');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showDevNotice, setShowDevNotice] = useState(true);
 
   const cartCount = useMemo(() => cart.reduce((acc, item) => acc + item.quantity, 0), [cart]);
 
@@ -45,6 +47,52 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+      <AnimatePresence>
+        {showDevNotice && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="max-w-md w-full bg-zinc-900 border border-white/10 p-8 rounded-[32px] relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6">
+                  <AlertTriangle className="w-8 h-8 text-yellow-500" />
+                </div>
+                
+                <h2 className="font-sync text-lg font-bold tracking-widest mb-4">SYSTEM NOTICE</h2>
+                
+                <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+                  This website is under development under <span className="text-white font-bold">TrinityDev/(Thio)</span>. 
+                  Some features may be experimental as we engineer the future of footwear commerce.
+                </p>
+                
+                <button 
+                  onClick={() => setShowDevNotice(false)}
+                  className="w-full bg-white text-black h-14 rounded-2xl font-bold font-sync text-xs tracking-widest hover:scale-[1.02] transition-transform"
+                >
+                  ENTER EXPERIENCE
+                </button>
+              </div>
+
+              <button 
+                onClick={() => setShowDevNotice(false)}
+                className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Navbar 
         cartCount={cartCount} 
         currentView={currentView} 

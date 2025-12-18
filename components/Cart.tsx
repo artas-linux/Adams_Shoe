@@ -84,7 +84,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemove, onUpdateQ
                             +
                           </button>
                         </div>
-                        <span className="font-bold text-sm">${(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-bold text-sm">Rs. {(item.price * item.quantity).toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
@@ -96,7 +96,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemove, onUpdateQ
               <div className="p-6 border-t border-white/10 bg-zinc-950/50 space-y-4">
                 <div className="flex justify-between font-sync text-sm">
                   <span className="text-zinc-500">SUBTOTAL</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>Rs. {total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between font-sync text-sm">
                   <span className="text-zinc-500">SHIPPING</span>
@@ -104,7 +104,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose, items, onRemove, onUpdateQ
                 </div>
                 <div className="flex justify-between font-sync text-lg font-bold border-t border-white/10 pt-4">
                   <span>TOTAL</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>Rs. {total.toLocaleString()}</span>
                 </div>
                 <button className="w-full bg-white text-black h-16 rounded-2xl font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform">
                   CHECKOUT NOW <ArrowRight className="w-5 h-5" />

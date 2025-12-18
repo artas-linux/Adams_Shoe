@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
@@ -35,9 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
       </div>
 
       <div className="p-6 flex-1 flex flex-col">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex flex-col gap-1 mb-2">
           <h3 className="font-sync text-lg font-bold tracking-tighter leading-none">{product.name}</h3>
-          <span className="text-zinc-400 font-bold">${product.price.toFixed(2)}</span>
+          <span className="text-zinc-400 font-bold text-sm">Rs. {product.price.toLocaleString()}</span>
         </div>
         <p className="text-zinc-500 text-sm line-clamp-2">{product.description}</p>
         
