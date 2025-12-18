@@ -1,37 +1,28 @@
-import { GoogleGenAI } from "@google/genai";
+
+/**
+ * Simulated Shoe Concept Generator
+ * Replaces live Gemini API for keyless deployment on GitHub Pages
+ */
+
+const MOCK_CONCEPTS = [
+  "https://images.unsplash.com/photo-1514989940723-e8e51635b782?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1605348532760-6753d2c43329?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1597043530274-080c98f80479?auto=format&fit=crop&q=80&w=1200",
+  "https://images.unsplash.com/photo-1582588673383-2806c49c5822?auto=format&fit=crop&q=80&w=1200"
+];
 
 export async function generateShoeConcept(prompt: string): Promise<string | null> {
+  // Simulate network latency and AI processing time
+  await new Promise(resolve => setTimeout(resolve, 2500));
+  
   try {
-    // Initializing precisely as per SDK guidelines
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
-      contents: {
-        parts: [
-          {
-            text: `High-quality, realistic professional studio photography of a futuristic sneaker design. Side view on a clean studio background. The design should be inspired by: ${prompt}. Cinematic lighting, 8k resolution, detailed texture.`,
-          },
-        ],
-      },
-      config: {
-        imageConfig: {
-          aspectRatio: "1:1"
-        }
-      }
-    });
-
-    if (response.candidates && response.candidates[0].content.parts) {
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          return `data:image/png;base64,${part.inlineData.data}`;
-        }
-      }
-    }
-    
-    return null;
+    // Return a random high-quality concept image
+    const randomIndex = Math.floor(Math.random() * MOCK_CONCEPTS.length);
+    return MOCK_CONCEPTS[randomIndex];
   } catch (error) {
-    console.error("Error generating shoe concept:", error);
+    console.error("Simulation error:", error);
     return null;
   }
 }
